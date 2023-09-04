@@ -15,7 +15,7 @@ jobs:
         dotnet-version: '7.0.x'
     - name: Publish with dotnet
       run: dotnet publish --configuration Release --output build
-    # changes the base-tag in index.html from '/' to 'BlazorGitHubPagesDemo' to  match GitHub Pages repository subdirectory
+    # changes the base-tag in index.html from '/' to 'BlazorGitHubPagesDemo' to match GitHub Pages repository subdirectory
     - name: Change base-tag in index.html from / to BlazorGitHubPagesDemo
       run: sed -i 's/<base href="\/" \/>/<base href="\/BlazorAppSpendsRegister\/" \/>/g' build/wwwroot/index.html
     - name: Commit wwwroot to GitHub Pages
