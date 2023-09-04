@@ -18,9 +18,11 @@ jobs:
     # changes the base-tag in index.html from '/' to 'BlazorGitHubPagesDemo' to match GitHub Pages repository subdirectory
     - name: Change base-tag in index.html from / to BlazorGitHubPagesDemo
       run: sed -i 's/<base href="\/" \/>/<base href="\/BlazorAppSpendsRegister\/" \/>/g' build/wwwroot/index.html
-    - name: Commit wwwroot to GitHub Pages
-      uses: JamesIves/github-pages-deploy-action@3.7.1
+    - name: Commit to GitHub pages Repo
+      if: success()
+      uses: crazy-max/ghaction-github-pages@v1.5.1
       with:
-        GITHUB_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
-        BRANCH: gh-pages
-        FOLDER: build/wwwroot
+        target_branch: gh-pages
+        build_dir: build/wwwroot
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
