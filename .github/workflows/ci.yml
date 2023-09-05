@@ -5,6 +5,9 @@ on: [push]
 permissions:
   contents: read
   pages: write
+  repository-projects: write
+  id-token: write
+  deployments: write
 
 jobs:
   deploy:
@@ -19,12 +22,12 @@ jobs:
         dotnet-version: '7.0.x'
     - name: Publish with dotnet
       run: dotnet publish --configuration Release --output build
-    # changes the base-tag in index.html from '/' to 'BlazorAppSpendsRegister'  to match GitHub Pages repository subdirectory
+    # changes the base-tag in index.html from '/' to 'BlazorAppSpendsRegister' to match GitHub Pages repository subdirectory
     - name: Change base-tag in index.html from / to BlazorAppSpendsRegister
       run: sed -i 's/<base href="\/" \/>/<base href="\/BlazorAppSpendsRegister\/" \/>/g' build/wwwroot/index.html
     - name: Commit wwwroot to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@3.7.1
       with:
-        GITHUB_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: gh-pages
         FOLDER: build/wwwroot
